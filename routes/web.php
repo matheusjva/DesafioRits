@@ -11,3 +11,4 @@
 |
 */
 Route::resource('vagas', 'VagasController');
+Route::resource('candidatos', 'CandidatosController');
