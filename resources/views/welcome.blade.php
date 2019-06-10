@@ -61,39 +61,168 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .Group4{
+
+position: absolute;
+width: 139.8px;
+height: 74px;
+left: 392px;
+top: 29px;
+            }
+
+
+.CARREIRAS{
+
+position: absolute;
+width: 90px;
+height: 11px;
+left: 417px;
+top: 92px;
+
+font-family: TT Norms;
+font-size: 9px;
+line-height: 11px;
+/* identical to box height */
+text-align: center;
+letter-spacing: 0.5em;
+
+color: #FFFFFF;
+}
+
+
+.Group {
+
+position: absolute;
+width: 139.8px;
+height: 56px;
+left: 392px;
+top: 29px;
+}
+
+
+.Path1 {
+
+position: absolute;
+width: 84px;
+height: 56px;
+left: 419.98px;
+top: 29px;
+
+background: #4EEF61;
+
+}
+.Path2 {
+
+position: absolute;
+width: 23.31px;
+height: 28px;
+left: 392px;
+top: 42.98px;
+
+/* Branco */
+background: #FFFFFF;
+}
+
+.Path3 {
+
+position: absolute;
+width: 23.32px;
+height: 27.92px;
+left: 508.49px;
+top: 43.06px;
+
+/* Branco */
+background: #FFFFFF;
+}
+
+.Rectangle14 {
+
+position: absolute;
+width: 6.99px;
+height: 28px;
+left: 445.66px;
+top: 42.98px;
+
+/* Branco */
+background: #FFFFFF;
+}
+
+.Path4 {
+
+position: absolute;
+width: 20.97px;
+height: 28px;
+left: 459.64px;
+top: 42.98px;
+
+/* Branco */
+background: #FFFFFF;
+}
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top" >
+         <div class="container">
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item">
+                        <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+                        </form>
+                     </li>
+                     <li class="nav-item active">
+                        <a class="nav-link" href="#">Inicio
+                              <span class="sr-only">(current)</span>
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre</a>
+                     </li>
+                     @guest
+                        <li class="nav-item">
+                              <a class="nav-link" href="#">{{ __('Entrar') }}</a>
+                        </li>
+                        {{--<li class="nav-item">--}}
+                              {{--@if (Route::has('register'))--}}
+                                 {{--<a class="nav-link" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>--}}
+                              {{--@endif--}}
+                        {{--</li>--}}
+                     @else
+                        <li class="nav-item">
+                              <a class="nav-link" href="#">Admin</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                 {{ Auth::user()->name }} <span class="caret"></span>
+                              </a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                 <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                 </a>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                 </form>
+                              </div>
+                        </li>
+                     @endguest
+                  </ul>
             </div>
-        </div>
+         </div>
+      </nav>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
     </body>
 </html>
+
+
