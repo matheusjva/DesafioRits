@@ -15,14 +15,16 @@ class CreateCandidatosTable extends Migration
     {
         Schema::create('candidatos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('vaga_id');
             $table->string('nome');
             $table->string('email');
-            $table->string('escolaridade');
+            $table->string('telefone');
+            $table->string('resumo');
+            $table->string('linkedin');
+            $table->string('github');
+            $table->enum('ingles', ['NENHUM', 'BASICO', 'INTERMEDIARIO', 'FLUENTE']);
+            $table->integer('salario');
             $table->string('curriculo');
             $table->timestamps();
-
-            $table->foreign('vaga_id')->references('id')->on('vagas');
         });
     }
 

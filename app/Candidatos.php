@@ -10,9 +10,13 @@ class Candidatos extends Model
     protected $fillable = [
         'nome',
         'email',
-        'escolaridade',
-        'curriculo',
-        'vaga_id'
+        'telefone',
+        'resumo',
+        'linkedin',
+        'github',
+        'ingles',
+        'salario',
+        'curriculo'
     ];
 
     public function vagas(): BelongsTo
