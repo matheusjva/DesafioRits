@@ -23,7 +23,7 @@ class CreateCandidatosTable extends Migration
             $table->string('github');
             $table->enum('ingles', ['NENHUM', 'BASICO', 'INTERMEDIARIO', 'FLUENTE']);
             $table->integer('salario');
-            $table->string('curriculo');
+            $table->string('file');
             $table->timestamps();
         });
     }
