@@ -83,7 +83,7 @@
       }
 </style>
 
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
     <div class="container-fluid backgroundImg">
         <div class="container" style="margin-bottom:20px;">
             <header>
@@ -111,24 +111,22 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" >
                         <ul class="navbar-nav ml-auto">
                                 <li class="dropdown nav-item">
-                                    <a href="{{url('/')}}" class="nav-link navbar-text" style="color:white;">
+                                    <a href="#" class="nav-link navbar-text" style="color:white;">
                                     A RITS
                                     </a>
                                 </li>
                                 <li class="dropdown nav-item">
-                                    <a href="{{url('/')}}" class="nav-link" style="color:white;">
+                                    <a href="#" class="nav-link" style="color:white;">
                                     NOSSOS VALORES
                                     </a>
                                 </li>
                                 <li class="dropdown menubotao nav-item">
-                                    <a href="{{url('/')}}" class="nav-link">
+                                    <a href="#section1" class="nav-link">
                                         <span style="color:#2E2236;">VAGAS ABERTAS </span>
                                     </a>
                                 </li>
@@ -140,13 +138,13 @@
                                 </li>
                                 @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Gerenciar
+                                    <a class="nav-link" href="{{route('home')}}" style="color:white;">
+                                        GERENCIAR
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <i class="material-icons">face</i>
+                                    <a id="navbarDropdown" style="color:white;  text-transform:uppercase" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+
                                         {{ Auth::user()->name }}
                                     </a>
 
@@ -154,8 +152,8 @@
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                                     document.getElementById('logout-form').submit();">
-                                                                    <i class="material-icons"> exit_to_app</i>
-                                            {{ __('Logout') }}
+
+                                            {{ __('SAIR') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -170,11 +168,21 @@
             </header>
             <section class="col-md-12 ml-auto mr-auto" style="padding-top:5%; margin-bottom:50px;">
                 <article>
+                        @if (session('status'))
+                            <div class="flex-center alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="flex-center alert alert-danger">
+                                    {{ session('error') }}
+                            </div>
+                        @endif
                     <header>
                         <p class="natal"><bold>Natal/RN - BRASIL</bold></p>
                         <h3 style="color:white; text-align:center;"><span >Desenvolvedor PHP</bold></h3>
                         <p  style="text-align:center;">
-                            <a href="#">
+                            <a href="#section1">
                                 <button class="menubotao" style="text-align:center; width: 150px; height: 40px; border:none; color:#2E2236;">
                                     Candidate-se
                                 </button>
@@ -248,44 +256,45 @@
                 </div>
             </section>
         </div>
-        <div class="container-fluid" style="background-color:white; width: 100%; padding-top:30px; padding-bottom:30px;">
+        <div class="container-fluid" id="section1" style="background-color:white; width: 100%; padding-top:30px; padding-bottom:30px;">
             <div class="container flex-center" style="magin-top:30px; text-align:center;">
-                <form style="magin-bottom:20px;">
+                <form style="magin-bottom:20px;" method="POST" action="{{route('candidatos.store')}}" enctype="multipart/form-data">
+                    @csrf
                     <label style="color:#2E2236;">Informações Gerais</label>
                     <div class="form-group col-md-6 container" >
-                        <input type="text" class="form-control form-control-lg retanguloInput" id="#" placeholder="NOME COMPLETO">
+                        <input type="text" class="form-control form-control-lg retanguloInput" name="nome" placeholder="NOME COMPLETO" required>
                     </div>
                     <div class="form-group col-md-6 container">
-                        <input type="email" class="form-control form-control-lg retanguloInput" id="#" placeholder="NOME@EXEMPLO.COM">
+                        <input type="email" class="form-control form-control-lg retanguloInput" name="email" placeholder="NOME@EXEMPLO.COM" required>
                     </div>
                     <div class="form-group col-md-6 container">
-                        <input type="tel" class="form-control form-control-lg retanguloInput"  id="#" placeholder="TELEFONE COM DDD">
+                        <input type="tel" class="form-control form-control-lg retanguloInput"  name="telefone" placeholder="TELEFONE COM DDD" required>
                     </div>
 
                     <label style="color:#2E2236;">Carta de apresentação</label>
                     <div class="form-group col-md-6 container">
-                        <textarea class="form-control retanguloInput" rows="3" placeholder="Breve resumo sobre você.(Opcional)"></textarea>
+                        <textarea class="form-control retanguloInput" rows="3" name="resumo" placeholder="Breve resumo sobre você.(Opcional)"></textarea>
                     </div>
 
                     <label style="color:#2E2236;">Ultimas perguntas</label>
                     <div class="form-group col-md-6 container">
-                        <input  type="url" class="form-control form-control-lg retanguloInput"  id="#" placeholder="URL DO SEU LINKEDIN">
+                        <input  type="url" class="form-control form-control-lg retanguloInput"  name="linkedin" placeholder="URL DO SEU LINKEDIN" required>
                     </div>
                     <div class="form-group col-md-6 container">
-                        <input  type="url" class="form-control form-control-lg retanguloInput"  id="#" placeholder="URL DO SEU GITHUB">
+                        <input  type="url" class="form-control form-control-lg retanguloInput"  name="github" placeholder="URL DO SEU GITHUB" required>
                     </div>
                     <div class="form-group col-md-6 container">
-                            <select class="form-control retanguloInput">
+                            <select class="form-control retanguloInput" name="ingles" required>
                                     <option value="" disabled selected>QUAL SEU NÍVEL DE INGLÊS?</option>
-                                    <option>Nenhum</option>
-                                    <option>Iniciante</option>
-                                    <option>Intermediário</option>
-                                    <option>Fluente</option>
+                                    <option value="NENHUM">Nenhum</option>
+                                    <option value="BASICO">Basico</option>
+                                    <option value="INTERMEDIARIO">Intermediário</option>
+                                    <option value="FLUENTE">Fluente</option>
                             </select>
                     </div>
 
                     <div class="form-group col-md-6 container">
-                        <input type="number" class="form-control form-control-lg retanguloInput"  id="#" placeholder="PRETENSÃO SALARIAL">
+                        <input type="number" class="form-control form-control-lg retanguloInput"  name="salario" placeholder="PRETENSÃO SALARIAL">
                     </div>
 
                     <label style="color:#2E2236;">Anexe seu curriculo em PDF ou DOC</label>
@@ -293,10 +302,10 @@
                         <label class="arquivo" for='selecao-arquivo'>
                             <span style="color:#2E2236"><i class="fas fa-paperclip"></i> Escolha o arquivo</span>
                         </label>
-                        <input id='selecao-arquivo' type='file'>
+                        <input id='selecao-arquivo' type='file' accept="application/pdf, .doc" name="file" required>
                     </div>
                     <div class="form-group col-md-6 container">
-                            <button type="submit"  class="btn btn-lg btn-block" style="border-radius:50px; background:#4EEF61; color:#2E2236;" id="#" >ENVIAR</button>
+                            <button type="submit"  name="submit" class="btn btn-lg btn-block" style="border-radius:50px; background:#4EEF61; color:#2E2236;">ENVIAR</button>
                     </div>
                 </form>
             </div>
