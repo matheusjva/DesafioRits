@@ -19,8 +19,4 @@ class Candidatos extends Model
         'curriculo'
     ];
 
-    public function vagas(): BelongsTo
-    {
-        return $this->belongsTo(Vagas::class, 'vaga_id');
-    }
 }
