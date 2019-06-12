@@ -1,72 +1,87 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Desafio Rits
+Aplicação de captura de curriculos para uma determinada vaga de emprego. 
+Foi desenvolvido em ambiente Linux com Laravel, PostgreSQL e Bootstrap.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+O sistema contém as seguintes páginas:
+- Index
+- Login 
+- Admin
 
-## About Laravel
+## Como executar o projeto
+#### 1. Instalando as dependências
+- Verifique as dependências do [Laravel](https://laravel.com/docs/)
+- Instalar o [Composer](https://getcomposer.org/)
+- Instalar o [PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### 2. Configuração Geral
+```shell
+$ git clone https://https://github.com/matheusjva/DesafioRits
+$ cd DesafioRits
+$ composer install
+$ cp .env.example .env
+```
+Altere o arquivo `.env` com suas configurações locais, como por exemplo, as informações do banco de dados e suas credenciais de email.(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD, MAIL_USERNAME, MAIL_PASSWORD e etc.). Em seguida faça:
+```shell
+$ php artisan key:generate
+$ php artisan migrate
+```
+Ao rodar o ultimo comando `php artisan migrate`, será gerado todas as tabelas necessarias e um usuário Admin default para poder fazer login no sistema. As credenciais do usuário Admin são: 
+- email: admin@example.org
+- senha: secret
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 3. Configurando email
+Está etapa é necessária para receber os emails do sistema com a quantidade de candidatos inscritos na vaga.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Foi utilizado o protocolo `smtp` e servidor de email `Gmail`.
 
-## Learning Laravel
+Altere as seguintes variáveis do arquivo `.env` com as suas credenciais:
+- Servidor
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1400 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Se for gmail, deixar como está. Outros exemplos: smtp.live.com, smtp.mail.yahoo.com
+```shell
+MAIL_HOST=smtp.gmail.com 
+```
+- Porta do Servidor
 
-## Laravel Sponsors
+Atualiza para a porta do seu servidor. Se for `Gmail` deixar como está.
+```shell
+MAIL_PORT=587
+```
+- Seu email
+```shell
+MAIL_USERNAME=exemplo@gmail.com
+```
+- Sua senha
+```shell
+MAIL_PASSWORD=suasenha
+```
+- Seu nome ou nome do seu email
+```shell
+MAIL_FROM_NAME='Desafio Rits'
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### 4. Configurando Cron Job
+O cron job é necessário para disparar os processos agendados do laravel. Aqui utilizaremos para enviar os emails com a quantidade de candidatos inscritos. Os emails serão disparados às 12h e às 18h todos os dias.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+Abra o seu arquivo crontab
+```shell
+ $ crontab -e
+```
+Adicione a seguinte linha de código a  ele: 
+```shell
+* * * * * cd /caminho/para/seu_projeto && php artisan schedule:run 1>> /dev/null 2>&1
+```
+Lembre-se de alterar `/caminho/para/seu_projeto` para o caminho do seu projeto na sua maquina. 
 
-## Contributing
+#### 5. Rodar projeto
+Por fim, rode o seguinte comando na pasta do projeto:
+```shell
+php artisan serve
+``` 
+Acesse no seu navegador o endereço para acessar o sistema:
+```shell
+http://127.0.0.1:8000
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
