@@ -18,7 +18,7 @@ class CreateCandidatosTable extends Migration
             $table->string('nome');
             $table->string('email');
             $table->string('telefone');
-            $table->string('resumo');
+            $table->string('resumo', 1000)->nullable();
             $table->string('linkedin');
             $table->string('github');
             $table->enum('ingles', ['NENHUM', 'BASICO', 'INTERMEDIARIO', 'FLUENTE']);
